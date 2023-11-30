@@ -1,0 +1,19 @@
+{
+  "name": "back-end-codeblog",
+  "version": "1.0.0",
+  "description": "Backend CodeBlog yang akan diintegrasikan dengan Front End CodeBlog",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kampus-Merdeka-Software-Engineering/BE-2-Jakarta-28.git"
+  },
+  "author": "Michael Sudirgo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kampus-Merdeka-Software-Engineering/BE-2-Jakarta-28/issues"
+  },
+  "homepage": "https://github.com/Kampus-Merdeka-Software-Engineering/BE-2-Jakarta-28#readme"
+}
