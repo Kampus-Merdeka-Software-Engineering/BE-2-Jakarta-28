@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
+import NewsRoutes from "./routes/NewsRoutes.js";
 
 // initialize server
 const app = express();
@@ -15,6 +16,12 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 // 3. Kita dapat set agar bodynya dapat menggunakan data json
 app.use(bodyParser.json());
+
+// 4. Kita dapat set express.json
+app.use(express.json());
+
+// 5. Kita dapat use routes untuk Newsnya
+app.use(NewsRoutes);
 
 // Menjalankan server
 app.listen(port, () => {
