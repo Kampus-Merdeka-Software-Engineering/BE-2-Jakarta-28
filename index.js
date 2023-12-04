@@ -2,7 +2,10 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import NewsRoutes from "./routes/NewsRoutes.js";
+<<<<<<< HEAD
 import FileUpload from "express-fileupload";
+=======
+>>>>>>> abc189fc725cce53509d469dcb572ba3f21ca4af
 
 // initialize server
 const app = express();
@@ -21,6 +24,7 @@ app.use(bodyParser.json());
 // 4. Kita dapat set express.json
 app.use(express.json());
 
+<<<<<<< HEAD
 // 5. Kita dapat menggunakan middleware file upload agar bisa mengupload image
 app.use(FileUpload());
 
@@ -28,6 +32,9 @@ app.use(FileUpload());
 app.use(express.static("public"));
 
 // 8. Kita dapat use routes untuk Newsnya
+=======
+// 5. Kita dapat use routes untuk Newsnya
+>>>>>>> abc189fc725cce53509d469dcb572ba3f21ca4af
 app.use(NewsRoutes);
 
 // Menjalankan server

@@ -2,7 +2,10 @@ import News from "../models/NewsModel.js";
 import path from "path";
 import fs from "fs";
 
+<<<<<<< HEAD
 // Mengambil semua news
+=======
+>>>>>>> abc189fc725cce53509d469dcb572ba3f21ca4af
 export const getNews = async (req,res) => {
     try {
         const response = await News.findAll();
@@ -10,6 +13,7 @@ export const getNews = async (req,res) => {
     } catch (error) {
         console.log(error.message);
     }
+<<<<<<< HEAD
 }
 
 // Disini kita mau mengambil news by slugnya
@@ -201,4 +205,23 @@ export const deleteNews = async(req, res) => {
         // Kalau error kita dapat print errornya
         console.log(error.message);
     }
+=======
+
+}
+
+export const getNewsBySlug = async(req,res) => {
+
+}
+
+export const createNews = async(req,res) => {
+
+}
+
+export const updateNews = async(req,res) => {
+
+}
+
+export const deleteNews = async(req, res) => {
+    
+>>>>>>> abc189fc725cce53509d469dcb572ba3f21ca4af
 }
