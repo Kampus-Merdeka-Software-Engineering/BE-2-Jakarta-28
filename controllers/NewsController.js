@@ -2,10 +2,7 @@ import News from "../models/NewsModel.js";
 import path from "path";
 import fs from "fs";
 
-<<<<<<< HEAD
 // Mengambil semua news
-=======
->>>>>>> abc189fc725cce53509d469dcb572ba3f21ca4af
 export const getNews = async (req,res) => {
     try {
         const response = await News.findAll();
@@ -13,7 +10,6 @@ export const getNews = async (req,res) => {
     } catch (error) {
         console.log(error.message);
     }
-<<<<<<< HEAD
 }
 
 // Disini kita mau mengambil news by slugnya
@@ -81,7 +77,7 @@ export const createNews = async(req,res) => {
         try {
             await News.create({title: title, slug: slug, content: content, image: fileName, url: url});
             // setelah itu kita akan return message kalau news berhasil dibuat
-            res.status(201).json({message: "Products has been created successfully"});
+            res.status(201).json({message: "News has been created successfully"});
         } catch (error) {
             // Kalau ada error, maka akan dikirim error message
             console.log(error.message);                
@@ -164,7 +160,7 @@ export const updateNews = async(req,res) => {
                 slug: req.params.slug
             }
         });
-        res.status(200).json({message: "Products updated successfully"})
+        res.status(200).json({message: "News updated successfully"})
     } catch (error) {
         // Apabila ada error, maka kita akan log kan errornya
         console.log(error.message);
@@ -205,23 +201,4 @@ export const deleteNews = async(req, res) => {
         // Kalau error kita dapat print errornya
         console.log(error.message);
     }
-=======
-
-}
-
-export const getNewsBySlug = async(req,res) => {
-
-}
-
-export const createNews = async(req,res) => {
-
-}
-
-export const updateNews = async(req,res) => {
-
-}
-
-export const deleteNews = async(req, res) => {
-    
->>>>>>> abc189fc725cce53509d469dcb572ba3f21ca4af
 }
