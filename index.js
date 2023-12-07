@@ -6,7 +6,7 @@ import db from "./config/Database.js";
 import SequelizeStore from "connect-session-sequelize";
 import FileUpload from "express-fileupload";
 import session from "express-session";
-import NewsRoutes from "./routes/NewsRoutes.js";
+import BlogsRoutes from "./routes/BlogRoutes.js";
 import UserRoutes from "./routes/UserRoutes.js";
 import AuthRoutes from "./routes/AuthRoutes.js";
 
@@ -25,9 +25,9 @@ const store = new sessionStore({
 });
 
 // untuk sinkronisasi db disini
-(async ()=> {
-    await db.sync();
-}) ();
+// (async ()=> {
+//     await db.sync();
+// }) ();
 
 // Middleware
 // ini konfigurasi untuk menggunakan session
@@ -42,13 +42,11 @@ app.use(session({
         // ini auto agar bisa keganti dari http(localhost) menjadi https(online)
         secure: "auto"
     }
-}))
+}));
+
 
 // Cors agar API kita bisa diakses darimana saja
-app.use(cors({
-    // Ini agar FE dapat mengirimkan request beserta cookie saat login
-    credentials: true
-}));
+app.use(cors());
 
 // Body parser disini agar bisa menggunakan request.body atau response.body
 app.use(bodyParser.urlencoded({extended: false}));
@@ -65,8 +63,8 @@ app.use(FileUpload());
 // Kemudian kita bisa set folder public jadi public agar bisa kebaca imagenya melalui url
 app.use(express.static("public"));
 
-// Kita dapat use routes untuk Newsnya
-app.use(NewsRoutes);
+// Kita dapat use routes untuk Blogsnya
+app.use(BlogsRoutes);
 
 // Kita dapat use untuk user routenya
 app.use(UserRoutes);
@@ -75,7 +73,7 @@ app.use(UserRoutes);
 app.use(AuthRoutes);
 
 // ini untuk menciptakan tabel session
-store.sync();
+// store.sync();
 
 // Menjalankan server
 app.listen(port, () => {

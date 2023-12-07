@@ -1,21 +1,21 @@
-import News from "../models/NewsModel.js";
+import Blogs from "../models/BlogModel.js";
 import path from "path";
 import fs from "fs";
 
-// Mengambil semua news
-export const getNews = async (req,res) => {
+// Mengambil semua Blogs
+export const getBlogs = async (req,res) => {
     try {
-        const response = await News.findAll();
+        const response = await Blogs.findAll();
         res.status(200).json(response);
     } catch (error) {
         console.log(error.message);
     }
 }
 
-// Disini kita mau mengambil news by slugnya
-export const getNewsBySlug = async(req,res) => {
+// Disini kita mau mengambil Blogs by slugnya
+export const getBlogBySlug = async(req,res) => {
     try {
-        const response = await News.findOne({
+        const response = await Blogs.findOne({
             where: {
                 slug: req.params.slug
             }
@@ -27,8 +27,8 @@ export const getNewsBySlug = async(req,res) => {
     }
 }
 
-// Membuat news baru 
-export const createNews = async(req,res) => {
+// Membuat Blogs baru 
+export const createBlog = async(req,res) => {
     // Lalu disini kita cek apakah ada file gambar yang di upload?
     // Kalau tidak ada maka kita akan kirimkan respond 400
     if(req.files === null) {
@@ -36,7 +36,7 @@ export const createNews = async(req,res) => {
     }
 
     // kita ambil dulu input title, slug dan contentnya dari body
-    const {title, slug, content} = req.body;
+    const {title, slug, author, published_date, content} = req.body;
 
     // Kalau ada maka kita akan mengambil filenya dan file length
     const file = req.files.file;
@@ -73,11 +73,11 @@ export const createNews = async(req,res) => {
             return res.status(500).json({message: error.message})
         }
 
-        // Lalu kita akan membuat newsnya
+        // Lalu kita akan membuat Blogsnya
         try {
-            await News.create({title: title, slug: slug, content: content, image: fileName, url: url});
-            // setelah itu kita akan return message kalau news berhasil dibuat
-            res.status(201).json({message: "News has been created successfully"});
+            await Blogs.create({title: title, slug: slug, content: content, image: fileName, url: url, author: author, published_date: published_date});
+            // setelah itu kita akan return message kalau Blogs berhasil dibuat
+            res.status(201).json({message: "Blogs has been created successfully"});
         } catch (error) {
             // Kalau ada error, maka akan dikirim error message
             console.log(error.message);                
@@ -85,18 +85,18 @@ export const createNews = async(req,res) => {
     });
 }
 
-// Kemudian disini untuk update news
-export const updateNews = async(req,res) => {
+// Kemudian disini untuk update Blogs
+export const updateBlog = async(req,res) => {
     // Kemudian disini kita dapat ambil dulu datanya berdasarkan slug
-    const news = await News.findOne({
+    const Blog = await Blogs.findOne({
         where: {
             slug: req.params.slug
         }
     });
 
     // Apabila datanya tidak diketemukan, maka akan direturn
-    if(!news) {
-        return res.status(404).json({message: "No News Found in database"});
+    if(!Blog) {
+        return res.status(404).json({message: "No Blogs Found in database"});
     };
 
     // Kemudian disini apabila datanya ada, maka kita akan membuat variabel filename dulu yang kosong
@@ -105,7 +105,7 @@ export const updateNews = async(req,res) => {
     // Kemudian kita dapat cek apakah admin ada upload file baru
     if(req.files === null) {
         // Apabila tidak upload filenya, maka kita dapat set file imagenya sesuai yang ada di database
-        fileName = news.image;
+        fileName = Blog.image;
     } else {
         // Apabila admin mengupload file image baru maka kita dapat masukkan file baru ke folder public kita dengan cara yang sama create tadi
         // Kalau ada maka kita akan mengambil filenya dan file length
@@ -134,7 +134,7 @@ export const updateNews = async(req,res) => {
         }
 
         // Lalu disini kita dapat unlink dan hapus file image yang lama dari folder public kita
-        const filepath = `./public/images/${news.image}`;
+        const filepath = `./public/images/${Blog.image}`;
         // Lalu kita dapat unlink
         fs.unlinkSync(filepath);
 
@@ -148,19 +148,19 @@ export const updateNews = async(req,res) => {
     }
 
     // Setelah file image sudah dicek, maka kita dapat mengambil data input untuk title, image, content dan url
-    const {title, slug, content} = req.body;
+    const {title, slug, author, published_date, content} = req.body;
     // Lalu kita dapat mengambil url localhost imagenya di folder public
     const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
 
     // Lalu kita dapat update databasenya
     try {
         // Lalu disini kita dapat pakai metode update
-        await News.update({title: title, slug: slug, content: content, image: fileName, url: url}, {
+        await Blogs.update({title: title, slug: slug, content: content, image: fileName, url: url, author: author, published_date: published_date }, {
             where: {
                 slug: req.params.slug
             }
         });
-        res.status(200).json({message: "News updated successfully"})
+        res.status(200).json({message: "Blogs updated successfully"})
     } catch (error) {
         // Apabila ada error, maka kita akan log kan errornya
         console.log(error.message);
@@ -168,35 +168,35 @@ export const updateNews = async(req,res) => {
 }
 
 // Kemudian ini untuk delete products
-export const deleteNews = async(req, res) => {
-    // Kemudian disini kita dapat cari dulu untuk news yang mau di delete
-    const news = await News.findOne({
+export const deleteBlog = async(req, res) => {
+    // Kemudian disini kita dapat cari dulu untuk Blogs yang mau di delete
+    const Blog = await Blogs.findOne({
         where: {
             slug: req.params.slug 
         }
     });
 
     // Kemudian disini kita dapat cek apakah data yang dicari ada di database
-    if(!news) {
+    if(!Blog) {
         // Apabila error, maka akan direturn message
-        return res.status(404).json({message: "No News Found in database"});
+        return res.status(404).json({message: "No Blogs Found in database"});
     }
 
     try {
         // Kemudian disini kita dapat mengambil file image yang ada di folder public
-        const filepath = `./public/images/${news.image}`;
+        const filepath = `./public/images/${Blog.image}`;
         // Lalu kita dapat unlink dengan folder public imagenya
         fs.unlinkSync(filepath);
 
-        // Kemudian kita dapat menghancurkan news dengan slug tersebut
-        await News.destroy({
+        // Kemudian kita dapat menghancurkan Blogs dengan slug tersebut
+        await Blogs.destroy({
             where: {
                 slug: req.params.slug
             }
         });
 
         // Lalu kita dapat kirimkan response kalau data berhasil dihapus
-        res.status(200).json({message: "News Deleted Successfully"});
+        res.status(200).json({message: "Blogs Deleted Successfully"});
     } catch (error) {
         // Kalau error kita dapat print errornya
         console.log(error.message);

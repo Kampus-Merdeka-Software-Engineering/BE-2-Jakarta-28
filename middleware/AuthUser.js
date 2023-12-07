@@ -19,7 +19,7 @@ const verifyUser = async(req, res, next) => {
     }
 
     // Berikut kita dapat cek idnya
-    // req.userId = user.id;
+    req.userId = user.id;
 
     // Setelah itu kita dapat masukkan next untuk ke middleware selanjutnya 
     next();
