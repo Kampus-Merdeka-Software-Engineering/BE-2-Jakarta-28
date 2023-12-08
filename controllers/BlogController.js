@@ -58,12 +58,12 @@ export const createBlog = async(req,res) => {
     // jadi disini extensionnya kita bisa lowercasekan semua dulu
     if(!allowedTypesFile.includes(ext.toLowerCase())) {
         // Kemudian disini kita dapat return message
-        return res.status(422).json({message: "Invalid image file extension"})
+        return res.status(422).json({message: "Invalid image file extension"});
     }
 
     // Apabila extension filenya sudaH benar, selanjutnya kita cek apakah file yang diupload lebih dari 5 MB
     if(fileSize > 5000000) {
-        return res.status(422).json({message: "Image must be less than 5 MB"})
+        return res.status(422).json({message: "Image must be less than 5 MB"});
     }
 
     // Kemudian disini setelah semua persyaratan sudah ok, maka kita dapat memasukkan image tersebut ke folder public > images
@@ -144,7 +144,7 @@ export const updateBlog = async(req,res) => {
             if(error) {
                 return res.status(500).json({message: error.message});
             }
-        })
+        });
     }
 
     // Setelah file image sudah dicek, maka kita dapat mengambil data input untuk title, image, content dan url

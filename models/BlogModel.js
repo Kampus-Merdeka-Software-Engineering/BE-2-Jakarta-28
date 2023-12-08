@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import db from "../config/Database.js";
 
 //Membuat design database blogs
-const Blogs = db.define("Blogs", {
+const Blogs = db.define("blogs", {
     title: DataTypes.STRING,
     slug: DataTypes.STRING,
     image: DataTypes.STRING,
