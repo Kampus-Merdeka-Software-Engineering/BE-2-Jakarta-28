@@ -18,31 +18,31 @@ const app = express();
 const port = 5000;
 
 // Kemudian disini kita dapat set session, jadi apabila sebelumnya kita sudah login, maka kita dapat tetap login lagi
-// const sessionStore = SequelizeStore(session.Store);
+const sessionStore = SequelizeStore(session.Store);
 
-// const store = new sessionStore({
-//     db: db
-// });
+const store = new sessionStore({
+    db: db
+});
 
 // untuk sinkronisasi db disini
-// (async ()=> {
-//     await db.sync();
-// }) ();
+(async ()=> {
+    await db.sync();
+}) ();
 
 // Middleware
 // ini konfigurasi untuk menggunakan session
-// app.use(session({
-//     secret: process.env.SESS_SECRET,
-//     resave: false,
-//     saveUninitialized: true,
+app.use(session({
+    secret: process.env.SESS_SECRET,
+    resave: false,
+    saveUninitialized: true,
 
-//     // Lalu kita dapat set apabila server di restart dan kita sudah login, maka kita akan tetap login 
-//     store: store,
-//     cookie: {
-//         // ini auto agar bisa keganti dari http(localhost) menjadi https(online)
-//         secure: "auto"
-//     }
-// }));
+    // Lalu kita dapat set apabila server di restart dan kita sudah login, maka kita akan tetap login 
+    store: store,
+    cookie: {
+        // ini auto agar bisa keganti dari http(localhost) menjadi https(online)
+        secure: "auto"
+    }
+}));
 
 
 // Cors agar API kita bisa diakses darimana saja
