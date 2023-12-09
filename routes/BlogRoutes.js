@@ -10,14 +10,16 @@ import verifyUser from "../middleware/AuthUser.js";
 
 const router = express.Router();
 
-// Deklarasi Routes untuk blogs 
+// Deklarasi Routes untuk blogs di front end ketika mau diambil
 router.get("/blogs", getBlogs);
 router.get("/blogs/:slug", getBlogBySlug);
-// router.post("/blogs", verifyUser, createBlog);
-router.post("/blogs", createBlog);
-// router.patch("/blogs/:slug", verifyUser, updateBlog);
-router.patch("/blogs/:slug", updateBlog);
-// router.delete("/blogs/:slug", verifyUser, deleteBlog);
-router.delete("/blogs/:slug", deleteBlog);
+
+// ini untuk dashboard
+router.get("/dashboardBlogs", verifyUser, getBlogs);
+router.get("/dashboardBlogs/:slug", verifyUser,getBlogBySlug);
+router.post("/dashboardBlogs", verifyUser, createBlog);
+router.patch("/dashboardBlogs/:slug", verifyUser, updateBlog);
+router.delete("/dashboardBlogs/:slug", verifyUser, deleteBlog);
+
 
 export default router;

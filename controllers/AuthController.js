@@ -1,5 +1,6 @@
 import User from "../models/UserModel.js";
 import argon2 from "argon2";
+import jwt from "jsonwebtoken";
 
 // Login
 export const Login = async(req,res) => {
@@ -22,17 +23,17 @@ export const Login = async(req,res) => {
     if(!match) {
         return res.status(400).json({message: "Wrong Password, Please Try Again"});
     }
-
-    // Kemudian kita akan set sessionnya apabila passwordnya sudah benar
-    req.session.userId = user.uuid;
-
+    
     // Lalu disini kita dapat pass data yang diperlukan untuk login
     const uuid = user.uuid;
     const name = user.name;
     const email = user.email;
 
+    // Lalu disini kita dapat initialisasi untuk json webtokennya
+    const jwtToken = jwt.sign({ uuid }, process.env.ACCESS_TOKEN);
+
     // Kemudian kita dapat kirimkan datanya dalam bentuk json
-    res.status(200).json({uuid, name, email});
+    res.status(200).json({uuid, name, email, jwtToken});
 };
 
 // Kemudian disini untuk mengambil data user 

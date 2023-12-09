@@ -2,7 +2,6 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv  from "dotenv";
-import db from "./config/Database.js";
 import FileUpload from "express-fileupload";
 import BlogsRoutes from "./routes/BlogRoutes.js";
 import UserRoutes from "./routes/UserRoutes.js";
