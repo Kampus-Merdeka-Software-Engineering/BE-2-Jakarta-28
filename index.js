@@ -3,9 +3,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv  from "dotenv";
 import db from "./config/Database.js";
-import SequelizeStore from "connect-session-sequelize";
 import FileUpload from "express-fileupload";
-import session from "express-session";
 import BlogsRoutes from "./routes/BlogRoutes.js";
 import UserRoutes from "./routes/UserRoutes.js";
 import AuthRoutes from "./routes/AuthRoutes.js";
@@ -17,33 +15,10 @@ dotenv.config();
 const app = express();
 const port = 5000;
 
-// Kemudian disini kita dapat set session, jadi apabila sebelumnya kita sudah login, maka kita dapat tetap login lagi
-const sessionStore = SequelizeStore(session.Store);
-
-const store = new sessionStore({
-    db: db
-});
-
 // untuk sinkronisasi db disini
-(async ()=> {
-    await db.sync();
-}) ();
-
-// Middleware
-// ini konfigurasi untuk menggunakan session
-app.use(session({
-    secret: process.env.SESS_SECRET,
-    resave: false,
-    saveUninitialized: true,
-
-    // Lalu kita dapat set apabila server di restart dan kita sudah login, maka kita akan tetap login 
-    store: store,
-    cookie: {
-        // ini auto agar bisa keganti dari http(localhost) menjadi https(online)
-        secure: "auto"
-    }
-}));
-
+// (async ()=> {
+//     await db.sync();
+// }) ();
 
 // Cors agar API kita bisa diakses darimana saja
 app.use(cors());
@@ -71,9 +46,6 @@ app.use(UserRoutes);
 
 // Kita dapat use untuk auth routenya
 app.use(AuthRoutes);
-
-// ini untuk menciptakan tabel session
-// store.sync();
 
 // Menjalankan server
 app.listen(port, () => {
