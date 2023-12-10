@@ -5,6 +5,7 @@
   "description": "Backend CodeBlog yang akan diintegrasikan dengan Front End CodeBlog",
   "main": "index.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "dev" : "nodemon index.js"
   },
