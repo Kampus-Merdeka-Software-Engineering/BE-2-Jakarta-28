@@ -12,7 +12,6 @@ dotenv.config();
 
 // initialize server
 const app = express();
-const port = 5000;
 
 // untuk sinkronisasi db disini
 // (async ()=> {
@@ -47,6 +46,6 @@ app.use(UserRoutes);
 app.use(AuthRoutes);
 
 // Menjalankan server
-app.listen(port, () => {
-    console.log(`Server is up and running at port ${port}`);
+app.listen(process.env.PORT, () => {
+    console.log(`Server is up and running at port ${process.env.PORT}`);
 });
